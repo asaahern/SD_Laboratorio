@@ -1,0 +1,223 @@
+<mat-card class="card">
+    <h2>Mostrando el usuario a añadir</h2>
+    <p>{{ usuario.nombre }} {{ usuario.apellidos }}</p>
+</mat-card>
+
+<mat-card class="card">
+    <section *ngIf=" accion === 'insertar' ">
+        <h2>Añadir un usuario</h2>
+
+        <form (ngSubmit)="anadirUsuario(anadirForm)" class="form" #anadirForm="ngForm">
+        <mat-card class="card">
+            <mat-label>Nombre : </mat-label>            
+            <input matInput type="text"
+                #name="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="usuario.nombre"
+                [ngClass]="{'is-valid': !name.valid, 'is-invalid': name.invalid}"
+                placeholder="Nombre (min. 3 letras)"
+                name="name"
+                minlength="3" required>
+            <div class="invalid-feedback" *ngIf="name.invalid">
+                <div *ngIf="name.errors.minlength">Introduzca un nombre con 3 caracteres mínimo</div>
+            </div>
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Apellido/s : </mat-label>
+            <input type="text"
+                #surname="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.apellidos"
+                [ngClass]="{'is-valid': !surname.valid, 'is-invalid': surname.invalid}"
+                placeholder="Apellido (min. 3 letras)"
+                name="surname"
+                minlength="3">
+            <div class="invalid-feedback" *ngIf="surname.invalid">
+                <div *ngIf="surname.errors.minlength">Introduzca un apellido con 3 caracteres mínimo</div>
+            </div>
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Edad : </mat-label>
+            <input type="number"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.edad "
+                matInput placeholder="Edad (0 - 125)">
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>DNI : </mat-label>
+            <input type="text"
+                #dni="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.DNI "
+                [ngClass]="{'is-valid': !dni.valid, 'is-invalid': dni.invalid}"
+                matInput placeholder="DNI (8 números y 1 letra)"
+                pattern="^[0-9]{8}[A-Za-z]{1}"
+                name="dni"
+                minlength="9" maxlength="9">
+            <div class="invalid-feedback" *ngIf="dni.invalid">
+                <div *ngIf="dni.errors.pattern">Introduzca 8 caracteres numéricos y una letra</div> 
+            </div>
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Fecha nacimiento : </mat-label>
+            <input type="date"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.cumpleanos "
+                matInput placeholder="Cumpleanos">
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Color favorito : </mat-label>
+            <input
+                #color="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.colorFavorito "
+                matInput placeholder="Color favorito"
+                name="color"
+                minlength="3">
+            <div class="invalid-feedback" *ngIf="color.invalid">
+                <div *ngIf="color.errors.minlength">Introduzca un color con 3 caracteres mínimo</div>
+            </div>
+        </mat-card>
+
+            <div>
+                <mat-radio-group aria-label="Sexo" [ngModelOptions]="{standalone: true}" [(ngModel)]=" usuario.sexo ">
+                <mat-radio-button class="radiobutton" value="Hombre">Hombre</mat-radio-button>
+                <mat-radio-button class="radiobutton" value="Mujer">Mujer</mat-radio-button>
+                <mat-radio-button class="radiobutton" value="Otro">Otro</mat-radio-button>
+                <mat-radio-button class="radiobutton" value="No especificado">No especificado</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <p></p>
+            
+            <input type="submit" value="Registrar">
+        </form>
+
+    </section>
+</mat-card>
+
+<mat-card class="card">
+    <section *ngIf=" accion === 'actualizar' ">
+        <h2>Editar un usuario</h2>
+
+        <form (ngSubmit)="actualizarUsuario(editarForm)" class="form" #editarForm="ngForm">
+        
+        <mat-card class="card">
+            <mat-label>Nombre : </mat-label>
+            <input matInput type="text"
+                #name="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="usuario.nombre"
+                [ngClass]="{'is-valid': !name.valid, 'is-invalid': name.invalid}"
+                placeholder="Nombre (min. 3 letras)"
+                name="name"
+                minlength="3" required>
+            <div class="invalid-feedback" *ngIf="name.invalid">
+                <div *ngIf="name.errors.minlength">Introduzca un nombre con 3 caracteres mínimo</div>
+            </div>
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Apellido/s : </mat-label>
+            <input type="text"
+                #surname="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.apellidos"
+                [ngClass]="{'is-valid': !surname.valid, 'is-invalid': surname.invalid}"
+                placeholder="Apellido (min. 3 letras)"
+                name="surname"
+                minlength="3" required>
+            <div class="invalid-feedback" *ngIf="surname.invalid">
+                <div *ngIf="surname.errors.minlength">Introduzca un apellido con 3 caracteres mínimo</div>
+            </div>
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Edad : </mat-label>
+            <input type="number"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.edad"
+                placeholder="Edad (0 - 125)" required>
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>DNI : </mat-label>
+            <input type="text"
+                #dni="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.DNI"
+                [ngClass]="{'is-valid': !dni.valid, 'is-invalid': dni.invalid}"
+                matInput placeholder="DNI (8 números y 1 letra)"
+                pattern="^[0-9]{8}[A-Za-z]{1}"
+                name="dni"
+                minlength="9" maxlength="9" required>
+            <div class="invalid-feedback" *ngIf="dni.invalid">
+                <div *ngIf="dni.errors.pattern">Introduzca 8 caracteres numéricos y una letra</div> 
+            </div>
+        </mat-card>
+        
+        <mat-card class="card">
+            <mat-label>Fecha nacimiento : </mat-label>
+            <input type="date"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.cumpleanos "
+                matInput placeholder="Cumpleanos">
+        </mat-card>
+
+        <mat-card class="card">
+            <mat-label>Color favorito : </mat-label>
+            <input
+                #color="ngModel"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]=" usuario.colorFavorito "
+                matInput placeholder="Color favorito"
+                name="color"
+                minlength="3">
+            <div class="invalid-feedback" *ngIf="color.invalid">
+                <div *ngIf="color.errors.minlength">Introduzca un color con 3 caracteres mínimo</div>
+            </div>
+        </mat-card>
+
+            <div>
+                <mat-radio-group aria-label="Sexo" [ngModelOptions]="{standalone: true}" [(ngModel)]=" usuario.sexo ">
+                <mat-radio-button class="radiobutton" value="Hombre">Hombre</mat-radio-button>
+                <mat-radio-button class="radiobutton" value="Mujer">Mujer</mat-radio-button>
+                <mat-radio-button class="radiobutton" value="Otro">Otro</mat-radio-button>
+                <mat-radio-button class="radiobutton" value="No especificado">No especificado</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        
+        <p></p>
+
+            <input type="submit" value="Editar usuario">
+        
+        </form>
+
+    </section>
+</mat-card>
+
+<mat-card class="card">
+    <section>
+        <h2>Lista de usuarios</h2>
+        <ul  *ngIf=" usuarios.length !== 0 ">
+            <li *ngFor="let cadaUsuario of usuarios">
+                <h3>{{ cadaUsuario.nombre }} {{ cadaUsuario.apellidos }}</h3>
+            
+                <p>Edad: {{cadaUsuario.edad}}</p>
+                <p>DNI: {{cadaUsuario.DNI}}</p>
+                <p>Cumpleaños: {{cadaUsuario.cumpleanos | date: 'dd/MM/yyyy'}}</p>
+                <p>Color favorito: {{cadaUsuario.colorFavorito}}</p>
+                <p>Género: {{cadaUsuario.sexo}}</p>
+
+                <button (click)="eliminarUsuario(cadaUsuario._id)">Eliminar</button>
+                <button (click)="editarUsuario(cadaUsuario._id)">Editar</button>
+
+            </li>
+        </ul>
+    </section>
+</mat-card>
